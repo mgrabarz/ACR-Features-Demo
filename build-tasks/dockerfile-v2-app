@@ -1,0 +1,9 @@
+ARG REGISTRY_NAME
+FROM ${REGISTRY_NAME}/base/node:11-alpine
+
+COPY ./NodeSample /src
+RUN cd /src && npm install
+
+EXPOSE 8080
+
+CMD ["node", "/src/server.js"]

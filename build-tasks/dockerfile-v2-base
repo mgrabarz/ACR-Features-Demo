@@ -1,0 +1,3 @@
+FROM node:11-alpine
+
+ENV BASE_IMAGE CUSTOM-node:11-alpine
