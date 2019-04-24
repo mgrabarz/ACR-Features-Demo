@@ -1,9 +1,14 @@
 {
   "name": "node-sample",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "NodeSample",
   "main": "server.js",
   "author": {
-    "name": ""
+    "name": "Marek Grabarz"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "Github",
+    "url": "https://github.com/mgrabarz/ACR-Features-Demo"
   }
 }
