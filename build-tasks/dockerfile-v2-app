@@ -1,5 +1,5 @@
 ARG REGISTRY_NAME
-FROM ${REGISTRY_NAME}/base/node:11-alpine
+FROM ${REGISTRY_NAME}/node-base:stable
 
 COPY ./NodeSample /src
 RUN cd /src && npm install
