@@ -1,7 +1,7 @@
 version: v1.0.0
 steps:
   - id: build-image
-    build: -t {{.Run.Registry}}/nodehello:{{.Run.ID}} -t {{.Run.Registry}}/nodehello:latest -f dockerfile .
+    build: -t {{.Run.Registry}}/nodehello:{{.Run.ID}} -t {{.Run.Registry}}/nodehello:latest -f dockerfile ./build-tasks/
     when: ["-"]
   - id: run-image
     cmd: {{.Run.Registry}}/nodehello:{{.Run.ID}}
