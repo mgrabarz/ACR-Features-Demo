@@ -1,0 +1,16 @@
+version: v1.0.0
+steps:
+  - id: build-image
+    build: -t {{.Run.Registry}}/nodehello:{{.Run.ID}} -t {{.Run.Registry}}/nodehello:latest -f dockerfile .
+    when: ["-"]
+  - id: run-image
+    cmd: {{.Run.Registry}}/nodehello:{{.Run.ID}}
+    when: ["build-image"]
+  - id: test-if-works
+    cmd: curl --url http://localhost:8080
+    when: ["run-image"]
+  - id: push-images
+    push:
+    - {{.Run.Registry}}/nodehello:{{.Run.ID}}
+    - {{.Run.Registry}}/nodehello:latest
+    when: ["test-if-works"]

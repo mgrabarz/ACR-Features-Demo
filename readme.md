@@ -46,3 +46,11 @@ This repository demonstrates advanced features of ACR (Azure Container Registry)
     --branch "master" `
     --git-access-token ~~PAT_HERE~~
     ```
+
+4. **ACR multistep build task**
+
+    Run build:
+
+    ```
+    az acr run --registry acrfeaturesdemo  -f .\build-tasks\multistep.yaml https://github.com/mgrabarz/ACR-Features-Demo#:build-tasks
+    ```
