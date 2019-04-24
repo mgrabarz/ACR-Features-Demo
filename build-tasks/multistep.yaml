@@ -1,13 +1,15 @@
 version: v1.0.0
 steps:
   - id: build-image
-    build: -t {{.Run.Registry}}/nodehello:{{.Run.ID}} -t {{.Run.Registry}}/nodehello:latest -f dockerfile ./build-tasks/
+    build: -t {{.Run.Registry}}/nodehello:{{.Run.ID}} -t {{.Run.Registry}}/nodehello:latest -f ./build-tasks/dockerfile ./build-tasks/
     when: ["-"]
   - id: run-image
     cmd: {{.Run.Registry}}/nodehello:{{.Run.ID}}
     when: ["build-image"]
+    ports: ["8080"]
+    detach: true
   - id: test-if-works
-    cmd: curl --url http://localhost:8080
+    cmd: appropriate/curl --url http://run-image:8080
     when: ["run-image"]
   - id: push-images
     push:
