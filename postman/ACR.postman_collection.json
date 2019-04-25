@@ -1,0 +1,343 @@
+{
+	"info": {
+		"_postman_id": "b3568d95-3d09-41d1-b376-df78164a90a5",
+		"name": "ACR",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetCCToken",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{clientSecret}}",
+							"type": "text"
+						},
+						{
+							"key": "resource",
+							"value": "https://management.core.windows.net",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{clientId}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://login.microsoftonline.com/eternalsolutions.onmicrosoft.com/oauth2/token",
+					"protocol": "https",
+					"host": [
+						"login",
+						"microsoftonline",
+						"com"
+					],
+					"path": [
+						"eternalsolutions.onmicrosoft.com",
+						"oauth2",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConfigureWebhook",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer ...",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"location\": \"westeurope\",\r\n  \"properties\": {\r\n    \"serviceUri\": \"{{webhookUrl}}\",\r\n    \"status\": \"enabled\",\r\n    \"actions\": [\r\n      \"push\",\r\n      \"quarantine\"\r\n    ]\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "https://management.azure.com/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.ContainerRegistry/registries/{{registryName}}/webhooks/{{webhookName}}?api-version=2017-10-01",
+					"protocol": "https",
+					"host": [
+						"management",
+						"azure",
+						"com"
+					],
+					"path": [
+						"subscriptions",
+						"{{subscriptionId}}",
+						"resourceGroups",
+						"{{resourceGroupName}}",
+						"providers",
+						"Microsoft.ContainerRegistry",
+						"registries",
+						"{{registryName}}",
+						"webhooks",
+						"{{webhookName}}"
+					],
+					"query": [
+						{
+							"key": "api-version",
+							"value": "2017-10-01"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SetPolicy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer ...",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"quarantinePolicy\": {\r\n    \"status\": \"disabled\"\r\n  },\r\n  \"trustPolicy\": {\r\n    \"status\": \"enabled\",\r\n    \"type\": \"Notary\"\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "https://management.azure.com/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.ContainerRegistry/registries/{{registryName}}/updatePolicies?api-version=2017-10-01",
+					"protocol": "https",
+					"host": [
+						"management",
+						"azure",
+						"com"
+					],
+					"path": [
+						"subscriptions",
+						"{{subscriptionId}}",
+						"resourceGroups",
+						"{{resourceGroupName}}",
+						"providers",
+						"Microsoft.ContainerRegistry",
+						"registries",
+						"{{registryName}}",
+						"updatePolicies"
+					],
+					"query": [
+						{
+							"key": "api-version",
+							"value": "2017-10-01"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBAToken",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1f0a0046-09a7-46f3-b45a-53d5d4045251",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{clientSecret}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{clientId}}",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"value": true,
+							"type": "boolean"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{registryName}}.azurecr.io/oauth2/token?service={{registryName}}.azurecr.io&scope=repository:{{repositoryName}}:pull,push",
+					"protocol": "https",
+					"host": [
+						"{{registryName}}",
+						"azurecr",
+						"io"
+					],
+					"path": [
+						"oauth2",
+						"token"
+					],
+					"query": [
+						{
+							"key": "service",
+							"value": "{{registryName}}.azurecr.io"
+						},
+						{
+							"key": "scope",
+							"value": "repository:{{repositoryName}}:pull,push"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetImageMetadata",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SetImageMetadata",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "1685682e-6785-40f0-a51c-0fa4916cf9c8",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "16265a84-39bf-4743-994a-e55a5e38e95e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "fa00cd5f-a3ca-4b25-9e64-aa9e3cf2683a",
+			"key": "subscriptionId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "61d7bbce-bc9f-4228-bfad-d82f77386ebe",
+			"key": "resourceGroupName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "52675089-60fa-4228-a56f-24b5a19673d2",
+			"key": "registryName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "5ed88c86-ff24-46ca-a9f0-dacc0bc935b5",
+			"key": "webhookName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "5c3ddc7d-9c27-40be-9674-5dbff19fbf7a",
+			"key": "webhookUrl",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "64a9b28f-3fe4-4d45-80d3-6fbfbc86b90d",
+			"key": "clientSecret",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "c394ed88-5bf3-4f1b-8a8b-a623a57c470d",
+			"key": "clientId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "4071b1a1-0bf6-4628-8c8a-8d93ca57061d",
+			"key": "repositoryName",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
