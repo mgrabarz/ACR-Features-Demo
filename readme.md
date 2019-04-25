@@ -55,11 +55,11 @@ This repository demonstrates advanced features of ACR (Azure Container Registry)
     az acr run --registry acrfeaturesdemo  -f ./build-tasks/multistep.yaml https://github.com/mgrabarz/ACR-Features-Demo.git
     ```
 
-5. Configure webhooks
+5. **Configure webhooks**
 
     Use `GetCCToken` and then `ConfigureWebhook` methods from attached Postman collection.
 
-6. Set content trust
+6. **Set content trust**
    
    Use `GetCCToken` and then `SetPolicy` methods from attached Postman collection.
 
@@ -71,7 +71,7 @@ This repository demonstrates advanced features of ACR (Azure Container Registry)
    docker push acrfeaturesdemo.azurecr.io/nodehello:latest
    ```
 
-7. Test quarantine flow
+7. **Test quarantine flow**
 
     Use `GetCCToken` and then `SetPolicy` methods from attached Postman collection to enable quarantine flow.
 
